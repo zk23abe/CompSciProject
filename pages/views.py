@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from .forms import StudentForm
 from .models import Student, Invoice, Lesson 
+from django.shortcuts import render, redirect
 
 def home(request):
     #fech data from database
@@ -25,3 +27,16 @@ def home(request):
     }
 
     return render(request, "home.html", context)
+def about(request):
+    return render(request, "about.html")
+
+def add_student(request):
+    if request.method == 'POST':
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            form.save() 
+            return redirect('home')  
+    else:
+        form = StudentForm()
+
+    return render(request, 'add_student.html', {'form': form})
