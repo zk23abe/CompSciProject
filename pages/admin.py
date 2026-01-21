@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from django.contrib import admin
-from .models import Student, Invoice
+from .models import Student, Invoice, Lesson
 
 #manage tables in admin panel
 admin.site.register(Student)
