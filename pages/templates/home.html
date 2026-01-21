@@ -1,20 +1,93 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Project Home</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-    <div class="container mt-5">
-        <div class="card shadow p-4">
-            <h1 class="display-4 text-primary">LEMS</h1>
-            <p class="lead">Welcome to the project homepage.</p>
-            <hr>
-            <p><strong>Status:</strong> Environment Configured Successfully ✅</p>
-            <button class="btn btn-primary">View Details</button>
-            <a href="/about/" class="btn btn-primary">About This Project</a>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="display-5">Welcome back, {{ tutor_name }}</h1>
+        <p class="text-muted">Here is your daily overview.</p>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Active Students</h5>
+                <p class="display-4">{{ stats.active_students }}</p>
+            </div>
         </div>
     </div>
-</body>
-</html>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Total Income (Mtd)</h5>
+                <p class="display-4">£1,250</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-warning mb-3 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Pending Invoices</h5>
+                <p class="display-4">{{ stats.pending_invoices }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white border-0">
+                <h4 class="mb-0">📅 Upcoming Lessons</h4>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for lesson in lessons %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>{{ lesson.student }}</strong>
+                        <br>
+                        <small class="text-muted">{{ lesson.subject }}</small>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">{{ lesson.time }}</span>
+                </li>
+                {% empty %}
+                <li class="list-group-item">No lessons scheduled.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white border-0">
+                <h4 class="mb-0">💷 Recent Invoices</h4>
+            </div>
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for inv in invoices %}
+                    <tr>
+                        <td>{{ inv.student }}</td>
+                        <td>{{ inv.amount }}</td>
+                        <td>
+                            {% if inv.status == 'Paid' %}
+                                <span class="badge bg-success">Paid</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">Pending</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
