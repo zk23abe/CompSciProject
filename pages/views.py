@@ -57,3 +57,15 @@ def add_invoice(request):
         form = InvoiceForm()
 
     return render(request, 'add_invoice.html',{'form': form})
+
+@login_required
+def add_lesson(request):
+    if request.method == 'POST':
+        form = LessonForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form= LessonForm()
+
+    return render(request, 'add_lesson.html', {'form': form})
