@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import StudentForm, InvoiceForm
-from .models import Student, Invoice, Lesson 
+from .models import Student, Invoice, LessonForm
 from django.contrib.auth.decorators import login_required
 
 @login_required
