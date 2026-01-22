@@ -14,9 +14,9 @@ class Student(models.Model):
 # 2. Invoice Model
 class Invoice(models.Model):
     STATUS_CHOICES = [
-        ('PAID', 'PAID'),
-        ('PENDING', 'PENING'),
-        ('OVERDUE', 'OVERDUE'),
+        ('PAID', 'Padi'),
+        ('PENDING', 'Pending'),
+        ('OVERDUE', 'Overdue'),
     ]
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=6, decimal_places=2)

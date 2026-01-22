@@ -33,6 +33,11 @@
             <div class="card-body">
                 <h5 class="card-title">Pending Invoices</h5>
                 <p class="display-4">{{ stats.pending_invoices }}</p>
+                
+                <a href="/add_invoice/" class="btn btn-dark btn-sm">
+                    + Create Invoice
+                </a>
+                
             </div>
         </div>
     </div>
@@ -82,10 +87,12 @@
                         <td>{{ inv.student }}</td>
                         <td>£{{ inv.amount }}</td>
                         <td>
-                            {% if inv.status == 'Paid' %}
+                            {% if inv.status == 'Paid' or inv.status == 'PAID' %}
                                 <span class="badge bg-success">Paid</span>
+                            {% elif inv.status == 'Overdue' or inv.status == 'OVERDUE' %}
+                                <span class="badge bg-danger">Overdue</span>
                             {% else %}
-                                <span class="badge bg-warning text-dark">Pending</span>
+                                <span class ="badge bg-warning text-dark">{{ inv.get_status_display}}</span>
                             {% endif %}
                         </td>
                     </tr>
