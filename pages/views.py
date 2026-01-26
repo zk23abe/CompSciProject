@@ -11,12 +11,16 @@ def home(request):
     all_invoices = Invoice.objects.all()
     all_lessons = Lesson.objects.all().order_by('lesson_date') 
 
+    income_data = Invoice.pbjects.filter(status='PAID').aggregate(Sum('amount'))
+    total_income = income_data['amount__sum'] or 0
+
     
     dashboard_stats = {
         "total_students": all_students.count(),
         #unpaid invoices
         "pending_invoices": all_invoices.filter(status='PENDING').count(),
         # total income
+        "total_income": total_income,
         "active_students": all_students.count() 
     }
 
