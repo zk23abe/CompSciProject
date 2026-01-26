@@ -27,7 +27,8 @@ class InvoiceForm(forms.ModelForm):
 
 class LessonForm(forms.ModelForm):
     class Meta:
-        model = Lessonfieds = ['student', 'subject', 'lesson_date','notes']
+        model = Lesson
+        fields = ['student', 'subject', 'lesson_date','notes']
         widgets = {
             'student': forms.Select(attrs={'class': 'form-select'}),
             'subject': forms.TextInput(attrs={'class': 'form-control'}),
