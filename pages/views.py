@@ -81,3 +81,11 @@ def edit_invoice(request, pk):
     else:
         form = InvoiceForm(instance=invoice)
     return render(request, 'add_invoice.html',{'form': form})
+
+@login_required
+def delete_invoice(request, pk):
+    invoice = get_object_or_404(Invoice, pk=pk)
+    if request.method == 'POST':
+        invoice.delete()
+        return redirect('home')
+    return render(request, 'delete_confirmation.html',{'item': invoice})
