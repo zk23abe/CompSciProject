@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from pages.views import home, about, add_student, add_invoice, add_lesson, edit_invoice
+from pages.views import home, about, add_student, add_invoice, add_lesson, edit_invoice, delete_invoice
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +28,6 @@ urlpatterns = [
     path('add_lesson/', add_lesson, name='add_lesson'),
 
     path('invoice/edit/<int:pk>/', edit_invoice, name='edit_invoice'),
+
+    path('invoice/delete/<int:pk>/', delete_invoice, name='delete_invoice'),
 ]
