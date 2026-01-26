@@ -11,7 +11,7 @@ def home(request):
     all_invoices = Invoice.objects.all()
     all_lessons = Lesson.objects.all().order_by('lesson_date') 
 
-    income_data = Invoice.pbjects.filter(status='PAID').aggregate(Sum('amount'))
+    income_data = Invoice.objects.filter(status='PAID').aggregate(Sum('amount'))
     total_income = income_data['amount__sum'] or 0
 
     
