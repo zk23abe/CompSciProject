@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import StudentForm, InvoiceForm, LessonForm
 from .models import Student, Invoice, Lesson
 from django.contrib.auth.decorators import login_required
@@ -69,3 +69,15 @@ def add_lesson(request):
         form= LessonForm()
 
     return render(request, 'add_lesson.html', {'form': form})
+
+@login_required
+def edit_invoice(request, pk):
+    invoice = get_object_or_404(Invoice, pk=pk)
+    if request.method =='POST':
+        form = InvoiceForm(request.POST, instance=invoice)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = InvoiceForm(instance=invoice)
+    return render(request, 'add_invoice.html',{'form': form})
