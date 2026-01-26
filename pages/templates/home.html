@@ -103,6 +103,9 @@
                             <a href="{% url 'edit_invoice' inv.id %}" class="btn btn-sm btn-outline-secondary">
                                 Edit
                             </a>
+                            <a href="{%url 'delete_invoice' inv.id%}" class="btn btn-sm btn-outline-danger">
+                                Delete
+                            </a>
                         </td>
                     </tr>
                     {% empty %}
