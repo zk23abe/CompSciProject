@@ -94,3 +94,26 @@ def delete_invoice(request, pk):
         invoice.delete()
         return redirect('home')
     return render(request, 'delete_confirmation.html',{'item': invoice})
+
+@login_required
+def student_detail(request,pk):
+    student = get_object_or_404(Student, pk=pk)
+#getting related data for that spcific student
+    lessons = Lesson.objects.filter(student=student).order_by('lesson_date')
+    invoices = Invoice.objects.filter(student=student).order_by('-due_date')
+#calc personal invoice
+    total_billed = invoices.aggregate(Sum('amount'))['amount__sum'] or 0
+    total_paid = invoices.filter(status='PAID').aggregate(Sum('amount'))['amount__sum'] or 0
+    balance_due = total_billed - total_paid
+    context = {
+        'student': student,
+        'lessons': lessons,
+        'invoices': invoices,
+        'stats': {
+            'billed': total_billed,
+            'paid': total_paid,
+            'balance': balance_due
+        }
+    }
+    return render(request, 'student_detail.html', context)
+    
