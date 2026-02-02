@@ -43,6 +43,36 @@
     </div>
 </div>
 
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">📂 Student Directory</h5>
+                <span class="badge bg-light text-dark">{{ stats.total_students }} Students</span>
+            </div>
+            <div class="card-body">
+                
+                <input type="text" id="studentSearch" class="form-control mb-3" placeholder="🔍 Start typing a name to search...">
+
+                <div class="list-group" id="studentList" style="max-height: 200px; overflow-y: auto;">
+                    {% for student in all_students %}
+                        <a href="{% url 'student_detail' student.id %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center student-item">
+                            <div>
+                                <strong>{{ student.first_name }} {{ student.last_name }}</strong>
+                                <br>
+                                <small class="text-muted">{{ student.email }}</small>
+                            </div>
+                            <span class="badge rounded-pill bg-secondary">View Profile &rarr;</span>
+                        </a>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="row">
     <div class="col-md-6">
         <div class="card shadow-sm h-100">
@@ -56,7 +86,11 @@
                 {% for lesson in lessons %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
-                        <strong>{{ lesson.student }}</strong>
+                        <strong>
+                            <a href="{% url 'student_detail' lesson.student.id %}" class="text-decoration-none">
+                                 {{ lesson.student }}
+                            </a>
+                        </strong>
                         <br>
                         <small class="text-muted">{{ lesson.subject }}</small>
                     </div>
@@ -88,7 +122,8 @@
                 <tbody>
                     {% for inv in invoices %}
                     <tr>
-                        <td>{{ inv.student }}</td>
+                        <td><a href="{% url 'student_detail' inv.student.id %}" class ="text-decoration-none text-dark fw-bold">
+                            {{ inv.student }}</a></td>
                         <td>£{{ inv.amount }}</td>
                         <td>
                             {% if inv.status == 'Paid' or inv.status == 'PAID' %}
@@ -118,4 +153,22 @@
         </div>
     </div>
 </div>
+
+<script>
+        document.getElementById('studentSearch').addEventListener('keyup', function() {
+            var filter = this.value.toLowerCase();
+            var listItems = document.querySelectorAll('.student-item');
+
+            listItems.forEach(function(item) {
+                var text = item.innerText.toLowerCase();
+                if (text.includes(filter)) {
+                    item.style.display = ''; // Show
+                } else {
+                    item.style.display = 'none'; // Hide
+                }
+            });
+        });
+    </script>
+
 {% endblock %}
+

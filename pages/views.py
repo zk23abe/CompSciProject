@@ -29,7 +29,8 @@ def home(request):
         "stats": dashboard_stats,
         "lessons": all_lessons[:5],  #next 5 lessons + recent 5 invoices
         "invoices": all_invoices[:5], 
-        "tutor_name": request.user.username
+        "tutor_name": request.user.username,
+        "all_students": all_students
     }
 
     return render(request, "home.html", context)
