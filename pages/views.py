@@ -53,7 +53,7 @@ def add_invoice(request):
     if request.method == 'POST':
         form = InvoiceForm(request.POST)
         if form.is_valid():
-            form.save
+            form.save()
             return redirect('home')
         else:
             print("FORM IS INVALID")

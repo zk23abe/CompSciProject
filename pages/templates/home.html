@@ -24,7 +24,7 @@
         <div class="card text-white bg-success mb-3 shadow-sm">
             <div class="card-body">
                 <h5 class="card-title">Total Income (Mtd)</h5>
-                <p class="display-4">£1,250</p>
+                <p class="display-4">£{{ stats.total_income|floatformat:2 }}</p>
             </div>
         </div>
     </div>
@@ -32,7 +32,7 @@
         <div class="card text-white bg-warning mb-3 shadow-sm">
             <div class="card-body">
                 <h5 class="card-title">Pending Invoices</h5>
-                <p class="display-4">£{{ stats.total_income|floatformat:2 }}</p>
+                <p class="display-4">{{ stats.pending_invoices }}</p>
                 
                 <a href="/add_invoice/" class="btn btn-dark btn-sm">
                     + Create Invoice
@@ -103,7 +103,9 @@
                             <a href="{% url 'edit_invoice' inv.id %}" class="btn btn-sm btn-outline-secondary">
                                 Edit
                             </a>
-                            <a href="{%url 'delete_invoice' inv.id%}" class="btn btn-sm btn-outline-danger"></a>
+                            <a href="{%url 'delete_invoice' inv.id%}" class="btn btn-sm btn-outline-danger">
+                                Delete
+                            </a>
                         </td>
                     </tr>
                     {% empty %}

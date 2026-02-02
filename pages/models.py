@@ -14,7 +14,7 @@ class Student(models.Model):
 # 2. Invoice Model
 class Invoice(models.Model):
     STATUS_CHOICES = [
-        ('PAID', 'Padi'),
+        ('PAID', 'Paid'),
         ('PENDING', 'Pending'),
         ('OVERDUE', 'Overdue'),
     ]

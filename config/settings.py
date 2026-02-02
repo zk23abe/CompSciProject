@@ -100,6 +100,15 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# Date config
+DATE_INPUT_FORMATS = [
+    '%Y-%m-%d',  #  (ISO format - Standard HTML5)
+    '%d/%m/%Y',  #  (UK format)
+    '%d/%m/%y',  #  (UK short format)
+]
+USE_L10N = False # Allow us to override the default locale formats
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
