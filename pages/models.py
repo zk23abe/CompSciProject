@@ -33,5 +33,8 @@ class Lesson(models.Model):
     lesson_date = models.DateTimeField()
     notes = models.TextField(blank=True)
 
+    # creates subfolder to help with organisation of files
+    homework_file = models.FileField(upload_to='homework_files/', blank=True, null=True)
+
     def __str__(self):
         return f"{self.subject} with {self.student} on {self.lesson_date.strftime('%Y-%m-%d %H:%M')}"

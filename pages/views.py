@@ -67,7 +67,7 @@ def add_invoice(request):
 @login_required
 def add_lesson(request):
     if request.method == 'POST':
-        form = LessonForm(request.POST)
+        form = LessonForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('home')

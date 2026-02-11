@@ -36,6 +36,12 @@
                         <span class="badge bg-light text-dark">
                             {{ lesson.lesson_date|date:"D, d M H:i" }}
                         </span>
+                        {% if lesson.homework_file %}
+                            <br>
+                            <a href="{{ lesson.homework_file.url }}" target="_blank" class="btn btn-sm btn-outline-primary mt-1">
+                                📄 Download Homework
+                            </a>
+                        {% endif %}
                     </li>
                 {% empty %}
                     <li class="list-group-item">No lessons scheduled.</li>

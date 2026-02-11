@@ -28,10 +28,12 @@ class InvoiceForm(forms.ModelForm):
 class LessonForm(forms.ModelForm):
     class Meta:
         model = Lesson
-        fields = ['student', 'subject', 'lesson_date','notes']
+        fields = ['student', 'subject', 'lesson_date','notes','homework_file']
         widgets = {
             'student': forms.Select(attrs={'class': 'form-select'}),
             'subject': forms.TextInput(attrs={'class': 'form-control'}),
             'lesson_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
             'notes': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+
+            'homework_file': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
