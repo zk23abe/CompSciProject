@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import StudentForm, InvoiceForm, LessonForm
-from .models import Student, Invoice, Lesson
+from .models import Student, Invoice, Lesson, Message
 from django.contrib.auth.decorators import login_required
-from django.db.models import Sum
+from django.db.models import Sum, Q
+from django.contrib.auth.models import User
 
 @login_required
 def home(request):
@@ -158,3 +159,35 @@ def student_dashboard(request):
     
     return render(request, 'student_dashboard.html', context)
     
+
+@login_required
+def chat_view(request, user_id):
+    #define ho is talking to who
+    other_user = get_object_or_404(User, pk=user_id)
+    
+    #student can only contact tutor
+    if not request.user.is_superuser and not other_user.is_superuser:
+         return redirect('student_dashboard')
+
+    #get chat history
+    messages = Message.objects.filter(
+        Q(sender=request.user, receiver=other_user) | 
+        Q(sender=other_user, receiver=request.user)
+    ).order_by('timestamp')
+
+    # handle new message(POST)
+    if request.method == 'POST':
+        body = request.POST.get('message_body')
+        if body:
+            Message.objects.create(
+                sender=request.user,
+                receiver=other_user, 
+                body=body
+            )
+            return redirect('chat_view', user_id=user_id)
+
+    context = {
+        'other_user': other_user,
+        'messages': messages
+    }
+    return render(request, 'chat.html', context)

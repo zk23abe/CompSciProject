@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">💬 Chat with {{ other_user.username }}</h5>
+        </div>
+        
+        <div class="card-body" style="height: 400px; overflow-y: scroll; background-color: #f8f9fa;">
+            {% for msg in messages %}
+                <div class="d-flex {% if msg.sender == request.user %}justify-content-end{% else %}justify-content-start{% endif %} mb-3">
+                    <div class="card {% if msg.sender == request.user %}bg-primary text-white{% else %}bg-white border{% endif %}" style="max-width: 70%;">
+                        <div class="card-body p-2">
+                            <p class="mb-1">{{ msg.body }}</p>
+                            <small class="{% if msg.sender == request.user %}text-light{% else %}text-muted{% endif %}" style="font-size: 0.7em;">
+                                {{ msg.timestamp|date:"H:i" }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center text-muted mt-5">No messages yet. Say hello!</p>
+            {% endfor %}
+        </div>
+
+        <div class="card-footer bg-white">
+            <form method="POST" class="d-flex">
+                {% csrf_token %}
+                <input type="text" name="message_body" class="form-control me-2" placeholder="Type a message..." required>
+                <button type="submit" class="btn btn-primary">Send ➤</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    var chatBody = document.querySelector('.card-body');
+    chatBody.scrollTop = chatBody.scrollHeight;
+</script>
+{% endblock %}

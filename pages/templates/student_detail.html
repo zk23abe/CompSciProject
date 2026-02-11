@@ -4,6 +4,13 @@
 <div class="row mb-4">
     <div class="col-md-8">
         <h1>{{ student.first_name }} {{ student.last_name }}</h1>
+        {% if student.user %}
+             <a href="{% url 'chat_view' student.user.id %}" class="btn btn-primary btn-sm">
+                💬 Message Student
+             </a>
+        {% else %}
+             <span class="badge bg-secondary">No User Account Linked</span>
+        {% endif %}
         <p class="text-muted">{{ student.email }}</p>
         {% if student.parent_email %}
             <p class="text-muted"><small>Parent: {{ student.parent_email }}</small></p>
