@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from pages.views import home, about, add_student, add_invoice, add_lesson, edit_invoice, delete_invoice, student_detail
+from pages.views import home, about, add_student, add_invoice, add_lesson, edit_invoice, delete_invoice, student_detail, delete_lesson
 from django.conf import settings             
 from django.conf.urls.static import static
 
@@ -28,7 +28,7 @@ urlpatterns = [
     path('add_invoice/', add_invoice, name ='add_invoice'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('add_lesson/', add_lesson, name='add_lesson'),
-
+    path('delete_lesson/<int:pk>/', delete_lesson, name='delete_lesson'),
     path('invoice/edit/<int:pk>/', edit_invoice, name='edit_invoice'),
     path('invoice/delete/<int:pk>/', delete_invoice, name='delete_invoice'),
     path('student/<int:pk>/', student_detail, name='student_detail'),

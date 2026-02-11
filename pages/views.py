@@ -77,6 +77,17 @@ def add_lesson(request):
     return render(request, 'add_lesson.html', {'form': form})
 
 @login_required
+def delete_lesson(request, pk):
+    lesson = get_object_or_404(Lesson, pk=pk)
+
+    if request.method == 'POST':
+        lesson.delete()
+        return redirect('home')
+
+    return render(request, 'delete_lesson.html', {'item': lesson})
+
+
+@login_required
 def edit_invoice(request, pk):
     invoice = get_object_or_404(Invoice, pk=pk)
     if request.method =='POST':

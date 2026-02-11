@@ -75,35 +75,50 @@
 
 <div class="row">
     <div class="col-md-6">
-        <div class="card shadow-sm h-100">
-            <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">📅 Upcoming Lessons</h4>
-                <a href="/add_lesson/" class="btn btn-primary btn-sm">
-                    + Schedule
-                </a>
-            </div>
-            <ul class="list-group list-group-flush">
-                {% for lesson in lessons %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                        <strong>
-                            <a href="{% url 'student_detail' lesson.student.id %}" class="text-decoration-none">
-                                 {{ lesson.student }}
-                            </a>
-                        </strong>
+    <div class="card shadow-sm h-100">
+        <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">📅 Upcoming Lessons</h4>
+            <a href="/add_lesson/" class="btn btn-primary btn-sm">
+                + Schedule
+            </a>
+        </div>
+        <ul class="list-group list-group-flush">
+            {% for lesson in lessons %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                
+                <div>
+                    <strong>
+                        <a href="{% url 'student_detail' lesson.student.id %}" class="text-decoration-none">
+                             {{ lesson.student }}
+                        </a>
+                    </strong>
+                    <br>
+                    <small class="text-muted">{{ lesson.subject }}</small>
+                    
+                    {% if lesson.homework_file %}
                         <br>
-                        <small class="text-muted">{{ lesson.subject }}</small>
-                    </div>
-                    <span class="badge bg-primary rounded-pill">
+                        <a href="{{ lesson.homework_file.url }}" class="badge bg-info text-decoration-none mt-1" target="_blank">
+                            📎 File
+                        </a>
+                    {% endif %}
+                </div>
+            
+                <div class="text-end">
+                    <span class="badge bg-primary rounded-pill mb-1">
                         {{ lesson.lesson_date|date:"d M H:i" }}
                     </span>
-                </li>
-                {% empty %}
+                    <br>
+                    <a href="{% url 'delete_lesson' lesson.id %}" class="btn btn-sm btn-outline-danger border-0" title="Delete Lesson">
+                        🗑️
+                    </a>
+                </div>
+            
+            </li>
+            {% empty %}
                 <li class="list-group-item">No lessons scheduled.</li>
-                {% endfor %}
-            </ul>
-        </div>
+            {% endfor %}  </ul>
     </div>
+</div>
 
     <div class="col-md-6">
         <div class="card shadow-sm h-100">
