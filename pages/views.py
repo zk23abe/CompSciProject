@@ -6,6 +6,9 @@ from django.db.models import Sum
 
 @login_required
 def home(request):
+    #check for studentor tutor
+    if not request.user.is_superuser:
+        return redirect('student_dashboard')
     #fech data from database
     all_students = Student.objects.all()
     all_invoices = Invoice.objects.all()
@@ -128,4 +131,30 @@ def student_detail(request,pk):
         }
     }
     return render(request, 'student_detail.html', context)
+
+@login_required
+def student_dashboard(request):
+    #check if user exists and type of user
+    try:
+        student_profile = request.user.student
+    except Student.DoesNotExist:
+        return redirect('home')
+
+    # ensure only THIS student data is shown
+    my_lessons = Lesson.objects.filter(student=student_profile).order_by('lesson_date')
+    my_invoices = Invoice.objects.filter(student=student_profile).order_by('-due_date')
+
+    #invoice for student
+    total_billed = my_invoices.aggregate(Sum('amount'))['amount__sum'] or 0
+    total_paid = my_invoices.filter(status='PAID').aggregate(Sum('amount'))['amount__sum'] or 0
+    balance = total_billed - total_paid
+
+    context = {
+        'student': student_profile,
+        'lessons': my_lessons,
+        'invoices': my_invoices,
+        'balance': balance
+    }
+    
+    return render(request, 'student_dashboard.html', context)
     

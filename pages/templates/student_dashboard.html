@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>Welcome, {{ student.first_name }}! 🎓</h1>
+            <p class="text-muted">Here is your learning overview.</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <div class="card bg-info text-white shadow-sm">
+                <div class="card-body">
+                    <h6 class="mb-1">Current Balance</h6>
+                    <h3 class="mb-0">£{{ balance|floatformat:2 }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">📅 My Lessons</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for lesson in lessons %}
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>{{ lesson.subject }}</strong>
+                                    <br>
+                                    <small class="text-muted">{{ lesson.lesson_date|date:"D d M, H:i" }}</small>
+                                </div>
+                                {% if lesson.homework_file %}
+                                    <a href="{{ lesson.homework_file.url }}" class="badge bg-success text-decoration-none" target="_blank">
+                                        Download Homework
+                                    </a>
+                                {% endif %}
+                            </div>
+                            {% if lesson.notes %}
+                                <p class="mt-2 mb-0 small text-muted"><em>Note: {{ lesson.notes }}</em></p>
+                            {% endif %}
+                        </li>
+                    {% empty %}
+                        <li class="list-group-item">No upcoming lessons.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">🧾 My Invoices</h5>
+                </div>
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Due Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for inv in invoices %}
+                            <tr>
+                                <td>{{ inv.due_date }}</td>
+                                <td>£{{ inv.amount }}</td>
+                                <td>
+                                    {% if inv.status == 'PAID' or inv.status == 'Paid' %}
+                                        <span class="badge bg-success">Paid</span>
+                                    {% else %}
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr><td colspan="3">No invoices found.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
