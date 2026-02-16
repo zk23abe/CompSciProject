@@ -6,7 +6,7 @@
         <h1>{{ student.first_name }} {{ student.last_name }}</h1>
         {% if student.user %}
              <a href="{% url 'chat_view' student.user.id %}" class="btn btn-primary btn-sm">
-                💬 Message Student
+                <i class="bi bi-chat-left-text"></i> Message Student
              </a>
         {% else %}
              <span class="badge bg-secondary">No User Account Linked</span>
@@ -46,7 +46,7 @@
                         {% if lesson.homework_file %}
                             <br>
                             <a href="{{ lesson.homework_file.url }}" target="_blank" class="btn btn-sm btn-outline-primary mt-1">
-                                📄 Download Homework
+                                <i class="bi bi-file-earmark-arrow-down-fill"></i> Download Homework
                             </a>
                         {% endif %}
                     </li>
@@ -95,7 +95,7 @@
 <br>
 <div class="card shadow-sm mb-4 border-warning">
     <div class="card-header bg-warning text-dark">
-        <h5 class="mb-0">📝 Tutor Notes</h5>
+        <h5 class="mb-0"><i class="bi bi-pencil-square"></i> Tutor Notes</h5>
     </div>
     <div class="card-body">
         <form method="POST">
@@ -115,7 +115,7 @@
             
             <div class="d-grid">
                 <button type="submit" class="btn btn-outline-dark btn-sm">
-                    💾 Save Notes
+                    <i class="bi bi-floppy-fill"></i> Save Notes
                 </button>
             </div>
         </form>
