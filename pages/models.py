@@ -9,7 +9,7 @@ class Student(models.Model):
     email = models.EmailField(unique=True)
     parent_email = models.EmailField(blank=True, null = True)
     date_joined = models.DateField(auto_now_add=True)
-
+    tutor_notes = models.TextField(blank=True, null=True)
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
@@ -42,7 +42,7 @@ class Lesson(models.Model):
         return f"{self.subject} with {self.student} on {self.lesson_date.strftime('%Y-%m-%d %H:%M')}"
     
 class Message(models.Model):
-    #link ot user model
+    #link ot user
     sender = models.ForeignKey(User, related_name="sent_messages", on_delete=models.CASCADE)
     receiver = models.ForeignKey(User, related_name="received_messages", on_delete=models.CASCADE)
     body = models.TextField()

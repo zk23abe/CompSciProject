@@ -114,6 +114,14 @@ def delete_invoice(request, pk):
 @login_required
 def student_detail(request,pk):
     student = get_object_or_404(Student, pk=pk)
+    #handle save notes
+    if request.method == "POST":
+        new_notes = request.POST.get('tutor_notes')#get text from form
+        #update record, saves and viewable
+        student.tutor_notes = new_notes 
+        student.save()
+        return redirect('student_detail', pk=pk)
+
 #getting related data for that spcific student
     lessons = Lesson.objects.filter(student=student).order_by('lesson_date')
     invoices = Invoice.objects.filter(student=student).order_by('-due_date')
