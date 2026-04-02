@@ -4,19 +4,19 @@
 <div class="container mt-4">
     <div class="row mb-4">
         <div class="col-md-8">
-            <h1>Welcome, {{ student.first_name }}! 🎓</h1>
+            <h1>Welcome, {{ student.first_name }}! <i class="bi bi-mortarboard-fill"></i></h1>
             <p class="text-muted">Here is your learning overview.</p>
         </div>
         <div class="col-md-4 text-end">
             <div class="card bg-info text-white shadow-sm">
                 <div class="card-body">
-                    <h6 class="mb-1">Current Balance</h6>
+                    <h6 class="mb-1">Outstanding Balance</h6>
                     <h3 class="mb-0">£{{ balance|floatformat:2 }}</h3>
                 </div>
             </div>
             <br>
             <a href="{% url 'chat_view' 1 %}" class="btn btn-outline-primary">
-                💬 Contact Tutor
+                <i class="bi bi-chat-left-text"></i> Contact Tutor
             </a>
         </div>
     </div>
@@ -25,7 +25,7 @@
         <div class="col-md-6">
             <div class="card shadow-sm h-100">
                 <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">📅 My Lessons</h5>
+                    <h5 class="mb-0"><i class="bi bi-calendar-event" style= "color: rgb(246, 247, 248);"></i> My Lessons</h5>
                 </div>
                 <ul class="list-group list-group-flush">
                     {% for lesson in lessons %}
@@ -56,7 +56,7 @@
         <div class="col-md-6">
             <div class="card shadow-sm h-100">
                 <div class="card-header bg-secondary text-white">
-                    <h5 class="mb-0">🧾 My Invoices</h5>
+                    <h5 class="mb-0"><i class="bi bi-cash-coin" style = "color: white"></i> My Invoices</h5>
                 </div>
                 <table class="table mb-0">
                     <thead>

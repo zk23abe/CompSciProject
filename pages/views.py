@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 @login_required
 def home(request):
-    #check for studentor tutor
+    #check for student or tutor
     if not request.user.is_superuser:
         return redirect('student_dashboard')
     #fech data from database
